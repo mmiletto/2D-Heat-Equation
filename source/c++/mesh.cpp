@@ -23,26 +23,22 @@ void mesh::generate_square_mesh(const int n_triangles)
     size_t n_tria = initial_triangles.size();
     while (n_tria < n_triangles)
     {
-        auto &t = initial_triangles[triangle_start];
-        std::cout << "n_tria " << n_tria << " triangle_start " << triangle_start <<
-                  " initial_triangles_size " << initial_triangles_size << std::endl;
-
+        const Triangle t = initial_triangles[triangle_start];
         auto [v1, v2] = t.get_longest_edge_pair(initial_points.data());
         auto mid_point = get_edge_mid_point(v1, v2, t, initial_points.data());
         auto v3 = t.get_remaining_vertex(v1, v2);
-        std::cout << " mid point for v1 v2 = " << mid_point.x << " " << mid_point.y << std::endl;
 
         // From the new point created and the unused vertex, override the triangle_start and create a new one
         int mid_point_index = (int) initial_points.size();
         initial_points.push_back(mid_point);
 
-        // Create new triangle using v2
+        // Create a new triangle using v2
         initial_triangles.push_back(Triangle{t.vertices[v2], t.vertices[v3], mid_point_index});
 
-        // Update existing triangle
-        t.vertices[0] = t.vertices[v1];
-        t.vertices[1] = t.vertices[v3];
-        t.vertices[2] = mid_point_index;
+        // Update existing triangle vertices dropping  v2 and using v1 and mid point
+        initial_triangles[triangle_start].vertices[0] = t.vertices[v1];
+        initial_triangles[triangle_start].vertices[1] = t.vertices[v3];
+        initial_triangles[triangle_start].vertices[2] = mid_point_index;
 
         triangle_start++;
         n_tria = initial_triangles.size();
