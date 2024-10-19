@@ -17,8 +17,8 @@ struct Triangle
     // three vertices index that form a triangle
     int vertices[3];
 
-    double2 get_vertex_coordinate(int vertex, double2* points);
-    std::pair<int, int> get_longest_edge_pair(double2* points);
+    double2 get_vertex_coordinate(int vertex, double2 *points) const;
+    std::pair<int, int> get_longest_edge_pair(double2 *points) const;
     int get_remaining_vertex(int vertex_1, int vertex_2) const;
 };
 

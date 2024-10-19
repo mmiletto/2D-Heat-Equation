@@ -83,12 +83,12 @@ void mesh::write_triangle_mesh() const
     }
 }
 
-double2 Triangle::get_vertex_coordinate(int vertex, double2 *points)
+double2 Triangle::get_vertex_coordinate(int vertex, double2 *points) const
 {
     return points[this->vertices[vertex]];
 }
 
-std::pair<int, int> Triangle::get_longest_edge_pair(double2 *points)
+std::pair<int, int> Triangle::get_longest_edge_pair(double2 *points) const
 {
     double max_distance{0.0};
     int _v1, _v2;

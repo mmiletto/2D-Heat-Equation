@@ -8,4 +8,4 @@ double get_thermal_diffusivity(double thermal_conductivity, double density, doub
 }
 
 // known thermal diffusivity
-#define STAINLESS_STEEL 4.2e-6  // m^2/s
+#define STAINLESS_STEEL 4.2e-6// m^2/s
