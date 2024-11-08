@@ -28,6 +28,10 @@ public:
     void generate_square_mesh(int n_triangles);
     void write_triangle_mesh() const;
 
+    // Initial conditions
+    void setup_initial_temperature(double temperature);
+    void generate_connectivity_matrix();
+
 private:
     std::vector<double2> points;
     std::vector<Triangle> triangles;

@@ -2,18 +2,25 @@
 #include <iostream>
 #include <nlohmann/json.hpp>
 #include <set>
-#include <sstream>
 
 #include "geometric_operations.hpp"
 #include "mesh.h"
 /*!
  * Given a square of size 1x1m and two triangles, decompose it into a mesh of n triangles by subdividing each triangle into two.
+ * This method removes duplicated vertices based on proximity.
  * @param n_triangles
  */
 void mesh::generate_square_mesh(const int n_triangles)
 {
     std::vector<double2> initial_points = {{0.0, 0.0}, {0.0, 1.0}, {1.0, 0.0}, {1.0, 1.0}};
     std::vector<Triangle> initial_triangles = {{0, 1, 2}, {1, 2, 3}};
+
+    // Check if the newly create vertex already exists and return its index. If no such vertex exists, return -1.
+    auto find_existing_vertex = []() -> int
+    {
+
+    };
+
 
     // For each triangle find the longest edge and create a new point in its middle
     // Join this new point with the vertex that is not a part of the longest edge + one of the vertices that
@@ -81,6 +88,11 @@ void mesh::write_triangle_mesh() const
     {
         std::cerr << "Failed to open file\n";
     }
+}
+
+
+void mesh::setup_initial_temperature(double temperature)
+{
 }
 
 double2 Triangle::get_vertex_coordinate(int vertex, double2 *points) const
