@@ -25,14 +25,16 @@ struct Triangle
 class mesh
 {
 public:
-    void generate_square_mesh(int n_triangles);
+    void generate_square_mesh(const int target_n_triangles, const double size);
     void write_triangle_mesh() const;
 
     // Initial conditions
     void setup_initial_temperature(double temperature);
     void generate_connectivity_matrix();
 
+    static int coord_to_int(double coord, int precision = 8);
+
 private:
-    std::vector<double2> points;
+    std::vector<double2> vertexes;
     std::vector<Triangle> triangles;
 };

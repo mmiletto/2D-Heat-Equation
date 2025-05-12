@@ -5,4 +5,4 @@ It uses the Finite Difference Method to solve the heat equation over a triangula
 
 ## Boundary Conditions
 
-Use homogeneous Dirichlet conditions (0 temperature on the edges).
+Use homogeneous Dirichlet conditions: fixed temperature on the domain boundary.

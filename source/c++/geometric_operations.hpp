@@ -19,7 +19,7 @@ double get_squared_distance(double2 a, double2 b)
 
 double2 get_edge_mid_point(int v1, int v2, Triangle t, double2 *points)
 {
-    double2 mid_point;
+    double2 mid_point {0, 0};
     auto a = t.get_vertex_coordinate(v1, points);
     auto b = t.get_vertex_coordinate(v2, points);
 
