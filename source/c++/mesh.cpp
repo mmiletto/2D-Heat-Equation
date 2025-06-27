@@ -99,8 +99,22 @@ void mesh::generate_square_mesh(const int target_n_triangles, const double size)
         }
     }
 
-    this->vertexes = initial_points;
+    this->vertices = initial_points;
     this->triangles = initial_triangles;
+
+    std::cout << "Triangular square mesh of size " << size << "m generated with " << this->triangles.size() << " triangles and " << this->vertices.size() << " vertices." << std::endl;
+}
+
+/*!
+ * Convert a floating point coordinate value into its integer representation.
+ * @param [in] coord The coordinate to be transformed
+ * @param precision Desired number of decimal places to consider for the rounding
+ * @return The coordinate int representation given a the decimal precision.
+ */
+int mesh::coord_to_int(double coord, int precision)
+{
+    const double multiplier = std::pow(10.0, precision);
+    return static_cast<int>(std::round(coord * multiplier));
 }
 
 void mesh::write_triangle_mesh() const
@@ -108,7 +122,7 @@ void mesh::write_triangle_mesh() const
     // Print coordinates:
     nlohmann::json data;
 
-    for (auto point : this->vertexes)
+    for (auto point : this->vertices)
     {
         data["x"].push_back(point.x);
         data["y"].push_back(point.y);
@@ -131,22 +145,15 @@ void mesh::write_triangle_mesh() const
     }
 }
 
-
-void mesh::setup_initial_temperature(double temperature)
+void mesh::compute_mesh_triangles_area()
 {
+    for (auto& triangle : this->triangles)
+    {
+        triangle.area = triangle.compute_area(this->vertices.data());
+    }
 }
 
-/*!
- * Convert a floating point coordinate value into its integer representation.
- * @param [in] coord The coordinate to be transformed
- * @param precision Desired number of decimal places to consider for the rounding
- * @return The coordinate int representation given a the decimal precision.
- */
-int mesh::coord_to_int(double coord, int precision)
-{
-    const double multiplier = std::pow(10.0, precision);
-    return static_cast<int>(std::round(coord * multiplier));
-}
+// Triangle
 
 double2 Triangle::get_vertex_coordinate(int vertex, double2 *points) const
 {
@@ -184,3 +191,13 @@ int Triangle::get_remaining_vertex(int vertex_1, int vertex_2) const
     // 1 2 - 3
     return 3 - (vertex_1 + vertex_2);
 }
+
+double Triangle::compute_area(const double2 *points)
+{
+    const auto& p1 = points[this->vertices[0]];
+    const auto& p2 = points[this->vertices[1]];
+    const auto& p3 = points[this->vertices[2]];
+
+    return 0.5 * std::abs((p1.x-p3.x)*(p2.y-p1.y) - (p1.x-p2.x)*(p3.y-p1.y));
+}
+
