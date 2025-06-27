@@ -105,6 +105,16 @@ void mesh::generate_square_mesh(const int target_n_triangles, const double size)
     std::cout << "Triangular square mesh of size " << size << "m generated with " << this->triangles.size() << " triangles and " << this->vertices.size() << " vertices." << std::endl;
 }
 
+
+
+void mesh::setup_initial_temperature(double temperature)
+{
+}
+
+void mesh::generate_connectivity_matrix()
+{
+}
+
 /*!
  * Convert a floating point coordinate value into its integer representation.
  * @param [in] coord The coordinate to be transformed
@@ -201,3 +211,8 @@ double Triangle::compute_area(const double2 *points)
     return 0.5 * std::abs((p1.x-p3.x)*(p2.y-p1.y) - (p1.x-p2.x)*(p3.y-p1.y));
 }
 
+
+void ConnectivityMatrix::setup(const std::vector<Triangle> &triangles)
+{
+
+}
